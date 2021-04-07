@@ -36,6 +36,7 @@ class CreatePlayer {
         let imgElement = makeElement('img', 'src', this.fighter.img);
 
         nameDiv.innerHTML = this.fighter.name;
+        lifeDiv.style.width = `${this.fighter.hp}%`;
 
         progressBarDiv.appendChild(lifeDiv);
         progressBarDiv.appendChild(nameDiv);
