@@ -1,6 +1,7 @@
 function makeElement (tagName, attribute, attrValue) {
     let newElement = document.createElement(tagName);
     let newAttribute = document.createAttribute(attribute);
+
     newAttribute.value = attrValue;
     newElement.setAttributeNode(newAttribute);
 
@@ -8,7 +9,8 @@ function makeElement (tagName, attribute, attrValue) {
 }
 
 class Fighter {
-    constructor(name, hp, img, weapon) {
+    constructor(player, name, hp, img, weapon) {
+        this.player = player;
         this.name = name;
         this.hp = hp;
         this.img = img;
@@ -22,13 +24,12 @@ class Fighter {
 }
 
 class CreatePlayer {
-    constructor(player, fighter) {
-        this.player = player;
+    constructor(fighter) {
         this.fighter = fighter;
     }
 
     buildDOM() {
-        let playerDiv = makeElement('div', 'class', this.player);
+        let playerDiv = makeElement('div', 'class', this.fighter.player);
         let progressBarDiv = makeElement('div', 'class', 'progressbar');
         let lifeDiv = makeElement('div', 'class', 'life');
         let nameDiv = makeElement('div', 'class', 'name');
@@ -44,6 +45,6 @@ class CreatePlayer {
         playerDiv.appendChild(progressBarDiv);
         playerDiv.appendChild(charDiv);
 
-        document.querySelector('.arenas').appendChild(playerDiv);
+        return playerDiv;
     }
 }
