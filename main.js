@@ -32,19 +32,16 @@ const randomHP = () => Math.floor(Math.random() * 20) + 1;
 function changeHP(value) {
     value = randomHP();
 
-    const enemy = player2.fighter;
-    enemy.hp -= value;
+    this.hp -= value;
 
-    if (enemy.hp > 0) {
-        enemy.renderhp();
-        console.log(`${enemy.name} HP left:`, enemy.hp);
+    if (this.hp > 0) {
+        this.renderhp();
+        console.log(`${this.name} HP left:`, this.hp);
     }
     else {
-        enemy.hp = 0;
-        enemy.renderhp();
-        document.querySelector('.winnerBar').classList.toggle('show');
-        document.querySelector('.winnerBar').innerHTML = `${player1.fighter.name} wins`;
-        rndmButton.disabled = true;
+        this.hp = 0;
+        this.renderhp();
+        console.log(`${this.name} HP: ${this.hp}. Obviosly, ${this.name} is dead.`);
     }
 }
 
@@ -56,7 +53,21 @@ function elHP() {
     return document.querySelector(`.${this.player} .life`);
 }
 
+// Пока оставил это всё для интриги, уберу потом =)
 rndmButton.onclick = function () {
-    player2.fighter.changehp();
-};
+    const punch = Math.random() > 0.5 ? 1 : 0;
 
+    if (punch === 1) {
+        player1.fighter.changehp();
+    }
+    else player2.fighter.changehp();
+
+    if (player2.fighter.hp === 0 || player1.fighter.hp === 0) {
+        const winner = player1.fighter.hp === 0 ? player2.fighter : player1.fighter;
+
+        document.querySelector('.winnerBar').classList.toggle('show');
+        document.querySelector('.winnerBar').innerHTML = `${winner.name} wins`;
+
+        rndmButton.disabled = true;
+    }
+};
