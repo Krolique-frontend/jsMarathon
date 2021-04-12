@@ -20,36 +20,33 @@ const player2 = new CreatePlayer(jax);
 arenas.appendChild(player1.buildDOM());
 arenas.appendChild(player2.buildDOM());
 
-function changeHp() {
-    let offender, defender;
+const randomHP = () => Math.floor(Math.random() * 20) + 1;
 
-    if (Math.random() > 0.5) {
-        offender = player1.fighter;
-        defender = player2.fighter;
-    } else {
-        offender= player2.fighter;
-        defender = player1.fighter;
-    }
+function changeHp(value) {
+    value = randomHP();
 
-    const life = document.querySelector(`.${defender.player} .life`);
-    const randomHP = Math.floor( 20 - Math.random() * 20 );
+    const enemy = player2.fighter;
+    enemy.hp -= value;
 
-    if (randomHP === 0) console.log(`${defender.name} block`);
-    else  defender.hp -= randomHP;
-
-    if (defender.hp > 0) {
-        life.style.width = `${defender.hp}%`;
-        console.log(`${defender.name} HP left:`, defender.hp);
+    if (enemy.hp > 0) {
+        renderHP.call(enemy);
+        console.log(`${enemy.name} HP left:`, enemy.hp);
     }
     else {
-        life.style.width = `0%`;
+        enemy.hp = 0;
+        renderHP.call(enemy);
         document.querySelector('.winnerBar').classList.toggle('show');
-        document.querySelector('.winnerBar').innerHTML = `${offender.name} wins`;
+        document.querySelector('.winnerBar').innerHTML = `${player1.fighter.name} wins`;
         rndmButton.disabled = true;
     }
 }
 
-rndmButton.onclick = changeHp;
+function renderHP() {
+    elHP.call(this).style.width = `${this.hp}%`;
+}
 
-// scorpion.attack();
-// subZero.attack();
+function elHP() {
+    return document.querySelector(`.${this.player} .life`);
+}
+
+rndmButton.onclick = changeHp;
