@@ -4,7 +4,7 @@
 // console.log('fight...');
 
 const arenas = document.querySelector('.arenas');
-const rndmButton = document.querySelectorAll('.button')[0];
+const rndmButton = document.querySelector('.button');
 
 const kungLao = new Fighter('player1', 'Kung Lao', 100, 'https://static.wikia.nocookie.net/mkwikia/images/1/1b/Kunglao_mk3.gif', ['hat']);
 const jax = new Fighter('player2', 'Jax', 100, 'https://static.wikia.nocookie.net/mkwikia/images/4/4e/JAX.gif', ['left hand', 'right hand']);
@@ -27,31 +27,7 @@ player2.fighter.changehp = changeHP;
 arenas.appendChild(player1.buildDOM());
 arenas.appendChild(player2.buildDOM());
 
-const randomHP = () => Math.floor(Math.random() * 20) + 1;
 
-function changeHP(value) {
-    value = randomHP();
-
-    this.hp -= value;
-
-    if (this.hp > 0) {
-        this.renderhp();
-        console.log(`${this.name} HP left:`, this.hp);
-    }
-    else {
-        this.hp = 0;
-        this.renderhp();
-        console.log(`${this.name} HP: ${this.hp}. Obviosly, ${this.name} is dead.`);
-    }
-}
-
-function renderHP() {
-    elHP.call(this).style.width = `${this.hp}%`;
-}
-
-function elHP() {
-    return document.querySelector(`.${this.player} .life`);
-}
 
 // Пока оставил это всё для интриги, уберу потом =)
 rndmButton.onclick = function () {
@@ -59,8 +35,12 @@ rndmButton.onclick = function () {
 
     if (punch === 1) {
         player1.fighter.changehp();
+        chatLog.call(player1.fighter);
     }
-    else player2.fighter.changehp();
+    else {
+        player2.fighter.changehp();
+        chatLog.call(player2.fighter);
+    }
 
     if (player2.fighter.hp === 0 || player1.fighter.hp === 0) {
         const winner = player1.fighter.hp === 0 ? player2.fighter : player1.fighter;
@@ -71,29 +51,6 @@ rndmButton.onclick = function () {
         rndmButton.disabled = true;
 
         document.querySelector('.control').appendChild(createReloadButton());
-        const restartButton = document.querySelectorAll('.button')[1];
-        restartButton.onclick = restart;
+        document.querySelectorAll('.button')[1].onclick = restart;
     }
 };
-
-function createReloadButton() {
-    const div = makeElement('div', 'class', 'reloadWrap');
-    const button = makeElement('button', 'class', 'button');
-
-    button.innerHTML = 'restart';
-    div.appendChild(button);
-
-    return button;
-}
-
-function restart() {
-    player1.fighter.hp = 100;
-    player2.fighter.hp = 100;
-
-    player1.fighter.renderhp();
-    player2.fighter.renderhp();
-
-    rndmButton.disabled = false;
-
-    document.querySelector('.control').removeChild(document.querySelectorAll('.button')[1]);
-}
