@@ -4,7 +4,7 @@
 // console.log('fight...');
 
 const arenas = document.querySelector('.arenas');
-const rndmButton = document.querySelector('.button');
+const rndmButton = document.querySelectorAll('.button')[0];
 
 const kungLao = new Fighter('player1', 'Kung Lao', 100, 'https://static.wikia.nocookie.net/mkwikia/images/1/1b/Kunglao_mk3.gif', ['hat']);
 const jax = new Fighter('player2', 'Jax', 100, 'https://static.wikia.nocookie.net/mkwikia/images/4/4e/JAX.gif', ['left hand', 'right hand']);
@@ -69,5 +69,31 @@ rndmButton.onclick = function () {
         document.querySelector('.winnerBar').innerHTML = `${winner.name} wins`;
 
         rndmButton.disabled = true;
+
+        document.querySelector('.control').appendChild(createReloadButton());
+        const restartButton = document.querySelectorAll('.button')[1];
+        restartButton.onclick = restart;
     }
 };
+
+function createReloadButton() {
+    const div = makeElement('div', 'class', 'reloadWrap');
+    const button = makeElement('button', 'class', 'button');
+
+    button.innerHTML = 'restart';
+    div.appendChild(button);
+
+    return button;
+}
+
+function restart() {
+    player1.fighter.hp = 100;
+    player2.fighter.hp = 100;
+
+    player1.fighter.renderhp();
+    player2.fighter.renderhp();
+
+    rndmButton.disabled = false;
+
+    document.querySelector('.control').removeChild(document.querySelectorAll('.button')[1]);
+}
