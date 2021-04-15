@@ -1,3 +1,10 @@
+const HIT = {
+    head: 30,
+    body: 25,
+    foot: 20
+};
+const ATTACK = ['head', 'body', 'foot'];
+
 function makeElement(tagName, attribute, attrValue) {
     let newElement = document.createElement(tagName);
     let newAttribute = document.createAttribute(attribute);

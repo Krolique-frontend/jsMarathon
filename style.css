@@ -425,16 +425,18 @@ input[type=radio]:checked + label > span:hover {
 
 .choose {
     position: absolute;
-    bottom: -25%;
+    bottom: -10%;
     left: 50%;
     transform: translate(-50%);
-    background: transparent;
+    background: #5d5d5d;
     padding: 30px;
     width: 40vw;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     z-index: 9999;
+    border-radius: 5px;
+    box-shadow: #0b0b0b 0px 10px 20px 10px;
 }
 
 .choose select {
