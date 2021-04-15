@@ -422,3 +422,26 @@ input[type=radio]:checked + label > span::before {
 input[type=radio]:checked + label > span:hover {
     background: none;
 }
+
+.choose {
+    position: absolute;
+    bottom: -25%;
+    left: 50%;
+    transform: translate(-50%);
+    background: transparent;
+    padding: 30px;
+    width: 40vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    z-index: 9999;
+}
+
+.choose select {
+    font-size: 1.2em;
+    width: 45%;
+}
+
+#applyChoice {
+    margin-top: 10px;
+}
