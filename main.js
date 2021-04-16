@@ -1,56 +1,55 @@
 "use strict";
 
-// alert('fightM...');
-// console.log('fight...');
-
 const arenas = document.querySelector('.arenas');
-const rndmButton = document.querySelector('.button');
+const formFight = document.querySelector('.control');
 
-const kungLao = new Fighter('player1', 'Kung Lao', 100, 'https://static.wikia.nocookie.net/mkwikia/images/1/1b/Kunglao_mk3.gif', ['hat']);
-const jax = new Fighter('player2', 'Jax', 100, 'https://static.wikia.nocookie.net/mkwikia/images/4/4e/JAX.gif', ['left hand', 'right hand']);
-const scorpion = new Fighter('player1', 'Scorpion', 100, 'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif', ['kunai chain', 'hellfire']);
-const kitana = new Fighter('player1', 'Kitana', 100, 'http://reactmarathon-api.herokuapp.com/assets/kitana.gif', ['steel fan', 'one more steel fan']);
-const liuKang = new Fighter('player2', 'Liu Kang', 100, 'http://reactmarathon-api.herokuapp.com/assets/liukang.gif', ['left leg', 'right leg']);
-const sonya = new Fighter('player1', 'Sonya', 100, 'http://reactmarathon-api.herokuapp.com/assets/sonya.gif', ['gun', 'some weapon']);
-const subZero = new Fighter('player2', 'Sub-Zero', 100, 'http://reactmarathon-api.herokuapp.com/assets/subzero.gif', ['ice blast', 'ice clone', 'many other ice stuff']);
+// Le choice
+const sel1 = document.getElementById('select1');
+const sel2 = document.getElementById('select2');
+const choose = document.querySelector('.choose');
 
-const player1 = new CreatePlayer(kungLao);
-const player2 = new CreatePlayer(jax);
+characters.forEach(char => {
+    const opt = document.createElement('option');
+    const opt2 = document.createElement('option');
+    opt.innerText = char.name;
+    opt2.innerText = char.name;
+    sel1.appendChild(opt);
+    sel2.appendChild(opt2);
+});
 
-player1.fighter.elhp = elHP;
-player2.fighter.elhp = elHP;
-player1.fighter.renderhp = renderHP;
-player2.fighter.renderhp = renderHP;
-player1.fighter.changehp = changeHP;
-player2.fighter.changehp = changeHP;
+let p1, p2, player1, player2;
 
-arenas.appendChild(player1.buildDOM());
-arenas.appendChild(player2.buildDOM());
+sel1.onchange = () => {
+    p1 = characters.find(char => char.name === sel1.value);
+    player1 = new Fighter(p1, 'player1');
+    arenas.appendChild(createPlayer.call(player1));
+    sel1.disabled = true;
+};
 
+sel2.onchange = () => {
+    p2 = characters.find(char => char.name === sel2.value);
+    player2 = new Fighter(p2, 'player2');
+    arenas.appendChild(createPlayer.call(player2));
+    sel2.disabled = true;
+};
 
+applyChoice.onclick = () => {
+    if (player1 && player2) choose.style.display = 'none';
+    else alert('Choose your fighter!');
+};
 
-// Пока оставил это всё для интриги, уберу потом =)
-rndmButton.onclick = function () {
-    const punch = Math.random() > 0.5 ? 1 : 0;
+// HardCode
+// const p1 = characters.find(char => char.name === 'Sonya');
+// const p2 = characters.find(char => char.name === 'Jax');
 
-    if (punch === 1) {
-        player1.fighter.changehp();
-        chatLog.call(player1.fighter);
-    }
-    else {
-        player2.fighter.changehp();
-        chatLog.call(player2.fighter);
-    }
+// const player1 = new Fighter(p1, 'player1');
+// const player2 = new Fighter(p2, 'player2');
 
-    if (player2.fighter.hp === 0 || player1.fighter.hp === 0) {
-        const winner = player1.fighter.hp === 0 ? player2.fighter : player1.fighter;
+// arenas.appendChild(createPlayer.call(player1));
+// arenas.appendChild(createPlayer.call(player2));
 
-        document.querySelector('.winnerBar').classList.toggle('show');
-        document.querySelector('.winnerBar').innerHTML = `${winner.name} wins`;
+formFight.onsubmit = event => {
+    event.preventDefault();
 
-        rndmButton.disabled = true;
-
-        document.querySelector('.control').appendChild(createReloadButton());
-        document.querySelectorAll('.button')[1].onclick = restart;
-    }
+    fight();
 };
