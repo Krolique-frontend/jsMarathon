@@ -117,7 +117,6 @@ function chatLog(type, offender, defender, damage) {
                 .replace('[playerKick]', offender.name);
 
             p.innerHTML = `>>${time} ${string} -${damage} [${defender.hp}/100]`;
-            chat.insertBefore(p, chat.children[0]);
             break;
 
         case 'defence':
@@ -127,7 +126,6 @@ function chatLog(type, offender, defender, damage) {
                 .replace('[playerKick]', offender.name);
 
             p.innerHTML = `>>${time} ${string}`;
-            chat.insertBefore(p, chat.children[0]);
             break;
 
         case 'start':
@@ -138,7 +136,6 @@ function chatLog(type, offender, defender, damage) {
                 .replace('[time]', time);
 
             p.innerHTML = `>>${time} ${string}`;
-            chat.insertBefore(p, chat.children[0]);
             break;
 
         case 'end':
@@ -148,18 +145,18 @@ function chatLog(type, offender, defender, damage) {
                 .replace('[playerWins]', offender);
 
             p.innerHTML = `>>${time} ${string}`;
-            chat.insertBefore(p, chat.children[0]);
             break;
 
         case 'draw':
             p.innerHTML = `>>${time} ${logs.draw}`;
-            chat.insertBefore(p, chat.children[0]);
             break;
 
         default:
-            chat.insertAdjacentHTML('afterbegin', '<span>> </span>')
+            p.innerHTML = '>';
+            break;
     }
 
+    chat.insertBefore(p, chat.children[0]);
 }
 
 function createPlayer() {
@@ -216,7 +213,7 @@ function fight() {
     const player = playerAttack();
     const enemy = enemyAttack();
 
-    if (enemy.hit === player.defence && player.hit === enemy.defence) {
+    if (enemy.hit === player.defence && player.hit !== enemy.defence) {
         chatLog('defence', player2, player1, 0);
         chatLog('defence', player1, player2, 0);
         chatLog();
