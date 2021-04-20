@@ -174,15 +174,15 @@ body {
     background-size: cover;
     background-position: center;
     border-top: 4px solid #f5d100;
+    padding: 0 30px;
+    color: #fff;
+    font-family: Arial;
 
     overflow: auto;
 }
 
 .chat .chatMsg {
     margin: 0;
-    color: #fff;
-    padding: 0 25px;
-    font-family: 'Mortal Kombat 3' ;
 }
 
 .character {
@@ -201,18 +201,24 @@ body {
 }
 
 .player2 .character img {
-    transform: scaleX(-1);
+    transform: scaleX(-1) translate(50%, 0);
 }
 
 .character img {
     height: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 .fight {
     position: absolute;
     z-index: 100;
-    top: 20%;
+    top: 30%;
     width: 300px;
+    left: 50%;
+    transform: translate(-50%, 0%);
 }
 
 .fight img {

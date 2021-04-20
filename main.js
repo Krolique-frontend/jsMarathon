@@ -34,7 +34,11 @@ sel2.onchange = () => {
 };
 
 applyChoice.onclick = () => {
-    if (player1 && player2) choose.style.display = 'none';
+    if (player1 && player2) {
+        chatLog('start', player1, player2);
+        chatLog();
+        choose.style.display = 'none';
+    }
     else alert('Choose your fighter!');
 };
 
