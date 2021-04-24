@@ -44,7 +44,7 @@ body {
     background: url(assets/wall-left.png);
     height: 100vh;
     background-size: contain;
-    background-repeat: no-repeat;
+    /*background-repeat: no-repeat;*/ /* на большом мониторе не хватает стен вокруг чата */
     top: 0;
     z-index: 100;
     left: 50%;
@@ -57,7 +57,7 @@ body {
     background: url(./assets/wall-right.png);
     height: 100vh;
     background-size: contain;
-    background-repeat: no-repeat;
+    /*background-repeat: no-repeat;*/
     top: 0;
     z-index: 100;
     right: 50%;
@@ -168,13 +168,13 @@ body {
 }
 
 .chat {
-    width: 786px;
+    width: 820px;  /* шоб убрать скролл бар*/
     height: 30vh;
     background: url(./assets/versus.png);
     background-size: cover;
     background-position: center;
     border-top: 4px solid #f5d100;
-    padding: 0 30px;
+    padding: 0 55px; /* шоб убрать скролл бар*/
     color: #fff;
     font-family: Arial;
 
