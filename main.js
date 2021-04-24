@@ -1,7 +1,9 @@
 "use strict";
+import {characters} from "./characters.js";
+import {chatLog, fight, Fighter, createPlayer} from "./models.js";
 
 const arenas = document.querySelector('.arenas');
-const formFight = document.querySelector('.control');
+export const formFight = document.querySelector('.control');
 
 // Le choice
 const sel1 = document.getElementById('select1');
@@ -17,7 +19,7 @@ characters.forEach(char => {
     sel2.appendChild(opt2);
 });
 
-let p1, p2, player1, player2;
+export let p1, p2, player1, player2;
 
 sel1.onchange = () => {
     p1 = characters.find(char => char.name === sel1.value);
@@ -29,6 +31,9 @@ sel1.onchange = () => {
 sel2.onchange = () => {
     p2 = characters.find(char => char.name === sel2.value);
     player2 = new Fighter(p2, 'player2');
+
+    player1.name === player2.name ? player2.name += '-2' : null;
+
     arenas.appendChild(createPlayer.call(player2));
     sel2.disabled = true;
 };

@@ -1,4 +1,4 @@
-const characters = [
+export const characters = [
     {
         name: "Kung Lao",
         hp: 100,
