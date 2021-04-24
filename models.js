@@ -1,5 +1,6 @@
 import {logs} from './logs.js';
-import {formFight, player1, player2} from './game.js';
+import { player1, player2 } from './game.js';
+import {characters} from "./characters.js";
 
 const HIT = {
     head: 30,
@@ -8,30 +9,15 @@ const HIT = {
 };
 const ATTACK = ['head', 'body', 'foot'];
 
-export class Fighter {
-    constructor(char, playerNum) {
-        this.player = playerNum;
-        this.name = char.name;
-        this.hp = char.hp;
-        this.img = char.img;
-        this.weapon = char.weapon;
-    }
+const formFight = document.querySelector('.control');
+formFight.onsubmit = event => {
+    event.preventDefault();
 
-    attack() {
-        console.log(`${this.name} Fight...`);
-    }
+    fight();
+};
 
-    elHP() {
-        return document.querySelector(`.${this.player} .life`);
-    }
-
-    renderHP() {
-        this.elHP().style.width = `${this.hp}%`;
-    }
-
-    changeHP(value) {
-        this.hp -= value;
-    }
+export function randomPlayer() {
+    return characters[random(characters.length - 1)];
 }
 
 function makeElement(tagName, attribute, attrValue) {
@@ -194,7 +180,7 @@ function restart() {
     chatLog();
 }
 
-function random(num) {
+export function random(num) {
     return Math.floor(Math.random() * num) + 1;
 }
 
@@ -235,7 +221,6 @@ export function chatLog(type, offender, defender, damage) {
             break;
 
         case 'end':
-            console.log('defender >>', defender, 'offender >>', offender);
             string = logs
                 .end[random(logs.end.length - 1)]
                 .replace('[playerLose]', defender)
@@ -260,3 +245,5 @@ export function chatLog(type, offender, defender, damage) {
 // function crit(obj) {
 //     return random(1000) > 950 ? obj.value *= 2 : null;
 // }
+
+
