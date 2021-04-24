@@ -1,5 +1,5 @@
 import {logs} from './logs.js';
-import {formFight, player1, player2} from './main.js';
+import {formFight, player1, player2} from './game.js';
 
 const HIT = {
     head: 30,
@@ -235,6 +235,7 @@ export function chatLog(type, offender, defender, damage) {
             break;
 
         case 'end':
+            console.log('defender >>', defender, 'offender >>', offender);
             string = logs
                 .end[random(logs.end.length - 1)]
                 .replace('[playerLose]', defender)
