@@ -1,6 +1,6 @@
-import {logs} from './logs.js';
-import { player1, player2 } from './game.js';
-import {characters} from "./characters.js";
+import {logs} from '../constants/logs.js';
+import { player1, player2 } from '../game.js';
+import {characters} from "../constants/characters.js";
 
 const HIT = {
     head: 30,
@@ -20,7 +20,7 @@ export function randomPlayer() {
     return characters[random(characters.length - 1)];
 }
 
-function makeElement(tagName, attribute, attrValue) {
+export function makeElement(tagName, attribute, attrValue) {
     let newElement = document.createElement(tagName);
     let newAttribute = document.createAttribute(attribute);
 
@@ -28,26 +28,6 @@ function makeElement(tagName, attribute, attrValue) {
     newElement.setAttributeNode(newAttribute);
 
     return newElement;
-}
-
-export function createPlayer() {
-    let playerDiv = makeElement('div', 'class', this.player);
-    let progressBarDiv = makeElement('div', 'class', 'progressbar');
-    let lifeDiv = makeElement('div', 'class', 'life');
-    let nameDiv = makeElement('div', 'class', 'name');
-    let charDiv = makeElement('div', 'class', 'character');
-    let imgElement = makeElement('img', 'src', this.img);
-
-    nameDiv.innerHTML = this.name;
-    lifeDiv.style.width = `${this.hp}%`;
-
-    progressBarDiv.appendChild(lifeDiv);
-    progressBarDiv.appendChild(nameDiv);
-    charDiv.appendChild(imgElement);
-    playerDiv.appendChild(progressBarDiv);
-    playerDiv.appendChild(charDiv);
-
-    return playerDiv;
 }
 
 function playerAttack() {
@@ -80,7 +60,7 @@ function enemyAttack() {
     };
 }
 
-export function fight() {
+function fight() {
     const player = playerAttack();
     const enemy = enemyAttack();
 
@@ -125,22 +105,19 @@ export function fight() {
         chatLog();
     }
 
-    if (player2.hp <= 0 || player1.hp <= 0) {
-        player1.hp <= 0 ? player1.hp = 0 : player2.hp = 0;
+    if (player2.hp === 0 || player1.hp === 0) {
+        document.querySelector('.button').disabled = true;
 
-        player1.renderHP();
-        player2.renderHP();
-
-        player1.hp <= 0
+        player1.hp === 0
             ? chatLog('end', player2.name, player1.name)
             : chatLog('end', player1.name, player2.name);
 
-        chatLog();
-
         let winner;
-        if (player1.hp <= 0) winner = player2;
+        if (player1.hp === 0) winner = player2;
         else if (player2.hp <= 0) winner = player1;
         else if (player1.hp <= 0 && player2.hp <= 0) chatLog('draw');
+
+        chatLog();
 
         document.querySelector('.winnerBar').classList.toggle('show');
         winner ? document.querySelector('.winnerBar').innerHTML = `${winner.name} wins` : null;
@@ -175,6 +152,7 @@ function restart() {
     document.querySelector('.winnerBar').classList.toggle('show');
 
     document.querySelector('.control').removeChild(document.querySelector('.resButton'));
+    document.querySelector('.button').disabled = false;
 
     chatLog('start', player1, player2);
     chatLog();
