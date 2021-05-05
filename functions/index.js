@@ -16,10 +16,6 @@ formFight.onsubmit = event => {
     fight();
 };
 
-export function randomPlayer() {
-    return characters[random(characters.length - 1)];
-}
-
 export function makeElement(tagName, attribute, attrValue) {
     let newElement = document.createElement(tagName);
     let newAttribute = document.createAttribute(attribute);
@@ -60,9 +56,18 @@ function enemyAttack() {
     };
 }
 
-function fight() {
-    const player = playerAttack();
-    const enemy = enemyAttack();
+async function fight() {
+    const player = await playerAttack();
+
+    const f = await fetch('http://reactmarathon-api.herokuapp.com/api/mk/player/fight', {
+        method: 'POST',
+        body: JSON.stringify({
+            hit: player.hit,
+            defence: player.defence
+        })
+    }).then(res => res.json());
+
+    const enemy = f.player2;
 
     if (enemy.hit === player.defence && player.hit === enemy.defence) {
         chatLog('defence', player2, player1, 0);
@@ -223,5 +228,3 @@ export function chatLog(type, offender, defender, damage) {
 // function crit(obj) {
 //     return random(1000) > 950 ? obj.value *= 2 : null;
 // }
-
-
